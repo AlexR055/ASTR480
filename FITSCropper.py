@@ -26,11 +26,11 @@ for i, file in enumerate(fits_files):
         # Create cutout
         cutout = Cutout2D(img, position=position, size=size, wcs=wcs)
 
-        # Update FITS HDU
+        #Update FITS HDU
         hdu.data = cutout.data
         hdu.header.update(cutout.wcs.to_header())
 
-        # Save cutout to new FITS file
+        # Save cutout regio to new FITS file
         cutout_filename = base_path + 'your desired file name' + file
 
         hdu.writeto(cutout_filename, overwrite=True)
