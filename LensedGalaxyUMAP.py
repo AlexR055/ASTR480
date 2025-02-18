@@ -26,7 +26,7 @@ for i, file in enumerate(fits_files):
         print(f"Processing {file}...")
         fdata = hdul['SCI'].data  # Extract image data
     
-    # Replace NaNs and standardize
+    #Replace NaNs and standardize (UMAP cant handle Nans)
     fdata_fixed = np.nan_to_num(fdata)
     #min_flux = np.nanmax(fdata)  # Use np.nanmin to ignore NaNs
     flux_threshold = -1
@@ -41,7 +41,7 @@ n_pixels = cube_data.shape[0] * cube_data.shape[1]  # Total number of pixels
 flattened_data = cube_data.reshape(n_pixels, -1)  # Flatten into 2D array: (pixels x filters)
 flux_intensities = flattened_data.mean(axis=1) 
 
-# sample only a subset of pixels to speed up UMAP
+# sample only a subset of pixels to speed up UMAP considerably
 sample_size = int(.1 * n_pixels)  # Take 10% of the pixels
 indices = np.random.choice(n_pixels, sample_size, replace=False)
 flattened_data_sampled = flattened_data[indices]
@@ -50,14 +50,14 @@ flux_intensities_sampled = flux_intensities[indices]
 #scaled_data = StandardScaler().fit_transform(flattened_data_sampled)
 
 # Apply UMAP to reduce dimensions from 6 to 3 (for 3D plotting)
-reducer = umap.UMAP(n_neighbors=30, min_dist=1, n_components=3, random_state=42, metric='euclidean', n_jobs=-1)  # n_jobs=-1 uses all available CPU cores
+reducer = umap.UMAP(n_neighbors=30, min_dist=1, n_components=3, random_state=42, metric='euclidean', n_jobs=-1)  # n_jobs=-1 uses all available CPU cores, makes UMAP faster
 embedding_3d = reducer.fit_transform(flattened_data_sampled) #replace with scaled_data
 
-# ========== 3D UMAP Projection ==========
+# ----- 3D UMAP Projection ----
 fig = plt.figure(figsize=(10, 7))
 ax = fig.add_subplot(111, projection='3d')
 
-# Plot UMAP in 3D
+#Plot UMAP in 3D
 scatter = ax.scatter(
     embedding_3d[:, 0], embedding_3d[:, 1], embedding_3d[:, 2],
     c=flux_intensities_sampled, cmap="plasma", s=10, norm=PowerNorm(gamma=.5)
@@ -94,7 +94,7 @@ ax.imshow(fdata, cmap='gray', origin='lower', interpolation='nearest', alpha=.5)
 # Overlay UMAP as a heatmap
 ax.imshow(umap_img, cmap='plasma', origin='lower', interpolation='nearest', alpha=1)
 
-# Add a colorbar to show flux intensity
+# Add a colorbar to show flux intensity -- optional -- 
 #cbar = plt.colorbar(ax.imshow(umap_img, cmap='viridis', origin='lower', interpolation='nearest', alpha=0.5))
 #cbar.set_label("Flux Intensity (from UMAP)")
 
