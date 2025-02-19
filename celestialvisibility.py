@@ -29,5 +29,5 @@ def object_visibility(obj_name, observer_lat, observer_lon, observer_alt, date):
     plt.grid()
     plt.show()
 
-# call the function
-object_visibility("Jupiter", 47.6062, -122.3321, 50, "2025-03-01")
+# call the function example
+#object_visibility("Jupiter", 47.6062, -122.3321, 50, "2025-03-01")
