@@ -12,8 +12,8 @@ def object_visibility(obj_name, observer_lat, observer_lon, observer_alt, date):
     obj = SkyCoord.from_name(obj_name) # these two lines define object of interests position
     obj_altaz = obj.transform_to(altaz_frame)
     
-    sun_altaz = get_sun(times).transform_to(altaz_frame) #gets sun altitude
-    moon_altaz = get_moon(times).transform_to(altaz_frame) #gets moon altitude
+    sun_altaz = get_sun(times).transform_to(altaz_frame) # gets sun altitude
+    moon_altaz = get_moon(times).transform_to(altaz_frame) # gets moon altitude
     
     #creates plot
     plt.figure(figsize=(10, 5))
@@ -29,5 +29,5 @@ def object_visibility(obj_name, observer_lat, observer_lon, observer_alt, date):
     plt.grid()
     plt.show()
 
-# Example usage
+# call the function
 object_visibility("Jupiter", 47.6062, -122.3321, 50, "2025-03-01")
