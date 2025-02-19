@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 
 def object_visibility(obj_name, obs_lat, obs_lon, obs_alt, date):
-    location = EarthLocation(lat=obs_lat * u.deg, lon=obs_lon * u.deg, height=obs_alt * u.m)  # obsevers location, altitude in m above sea level
-    times = Time(date) + np.linspace(0, 24, 100) * u.hour
+    location = EarthLocation(lat=obs_lat*u.deg, lon=obs_lon*u.deg, height=obs_alt*u.m)  # obsevers location, altitude in m above sea level
+    times = Time(date) + np.linspace(0, 24, 100)*u.hour
     altaz_frame = AltAz(obstime=times, location=location)
 
     obj = get_body(obj_name, times)  # fetches object of interests position
