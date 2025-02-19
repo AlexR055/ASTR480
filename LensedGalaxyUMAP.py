@@ -6,7 +6,7 @@ import umap
 from astropy.io import fits
 from sklearn.preprocessing import StandardScaler
 from matplotlib.colors import LogNorm, PowerNorm
-# List of FITS files
+# List of FITS files (cropped lensed galaxy SGAS1110 using my FITS cropper code)
 fits_files = [
     'LENSED_f480m_cut.fits', 'LENSED_f444w_cut_reproj.fits', 'LENSED_f356w_cut_reproj.fits',
     'LENSED_f277w_cut_reproj.fits', 'LENSED_f200w_cut_reproj.fits', 'LENSED_f150w_cut_reproj.fits'
